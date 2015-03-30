@@ -1,0 +1,14 @@
+.jumbotron{
+
+background: #b42d2d;
+color: white;
+
+}
+.panel {
+margin-left: 450px;
+margin-right: 450px;
+}
+#loginButton{
+
+	width: 200px;
+}
