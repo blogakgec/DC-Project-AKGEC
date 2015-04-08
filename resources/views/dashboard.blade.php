@@ -1,91 +1,155 @@
-<html lang="en">
-
+<html>
 <head>
-
-<meta charset="UTF-8">
-<title>Dashboard</title>
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="../public/css/dashboard.css">
-<script type="text/javascript">
-            function timedMsg()
-            {
-                var t=setInterval("change_time();",1000);
-            }
-            function change_time()
-            {
-                var d = new Date();
-                var curr_hour = d.getHours();
-                var curr_min = d.getMinutes();
-                var curr_sec = d.getSeconds();
-            if(curr_hour > 12)
-                curr_hour = curr_hour - 12;
-                if(curr_hour < 10)
-                { 
-                    curr_hour= '0'+curr_hour;
-                }
-                if(curr_min <10)
-                {
-                    curr_min= '0'+curr_min;
-                }
-                if(curr_sec < 10)
-                    curr_sec= '0'+curr_sec;
-                
-                
-            document.getElementById('clock').innerHTML =curr_hour+':'+curr_min+':'+curr_sec;
-            }
-            timedMsg();   
-        </script>
+    <title>Late Entry | Search</title>      
+    
+    <!-- css file -->
+    <!-- mainpage -->
+    <link rel="stylesheet" type="text/css" href="../public/css/mainpage.css">             
+    <!-- clock files-->
+    <link rel="stylesheet" href="FlipClock-master/compiled/flipclock.css">
+    <!-- bootstrapcdn -->
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <!-- date time picker -->
+    <link rel="stylesheet" href="/path/to/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
+    <!-- inside css -->
+    <link rel="stylesheet" type="text/css" href="../public/css/inside.css">
+    <!-- clock1 css-->
+    <link rel="stylesheet" type="text/css" href="../public/css/clock1.css">
+    
+    <!-- scripts -->            
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="FlipClock-master/compiled/flipclock.js"></script>      
 </head>
 
 <body>
+    <div class="container-fluid">
+        <!-- header -->
+        <div class="header row">
+            <div class="col-md-2 col-sm-1"></div>
+            <h1 class="text-center center col-md-7 col-sm-8">AKGEC LATE ENTRY SYSTEM</h1>
+            <!-- empty -->
+            <div class="col-md-1 col-sm-1"></div>
+            <!-- logout button at top -->
 
-<div class="jumbotron">
-	
-  <h1 align="center">Welcome, Mr. <?php echo $Session['current_user']; ?></h1>
-</div>
-<div id="date">
-    <h3 align="left">Today is <?php echo date("l, d M Y"); ?></h3>
-    
-         {!!  Form::open(['route' => 'date_submit']) !!}
-        <div id="Datewise_entry_field">
-        
-        {!! Form::input('date', 'entryDate', null, ['class' => 'form-control']) !!}
-    </div>
-    <div id="Datewise_entry_button">
-        {!!Form::submit('DATEWISE ENTRY', array('class' => 'btn btn-primary ', 'id' => 'datewiseEntry')  ) !!}
-        </div>
-        {!! Form::close() !!}
-        {!!  Form::open(['route' => 'report_submit']) !!}
-        <div id="Report_button">
-        <center>
-        {!!Form::submit('Generate Report', array('class' => 'btn btn-primary ', 'id' => 'reportButton')  ) !!}
-        </center>
-        {!! Form::close() !!}
-        </div>
+            {!!  Form::open(['route' => 'logout_submit']) !!}
 
-        {!!  Form::open(['route' => 'logout_submit']) !!}
-        <div id="Logout_button">
-        <center>
-        {!!Form::submit('LOGOUT', array('class' => 'btn btn-primary btn-lg', 'id' => 'logoutButton')  ) !!}
-        </center>
-        {!! Form::close() !!}
-        </div>
-		</div>
-<div id="clock_box">
-                <p id="clock"></p>
+            {!!Form::submit('Logout', array('class' => 'btn btn-default col-md-1 col-sm-1 logout')  ) !!}
+
+            {!! Form::close() !!}
+
+                <!-- <button class="btn btn-default col-md-1 col-sm-1 logout">
+                    <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                    <span> Logout</span>
+                </button> -->
+                <!-- empty -->
+                <div class="col-md-1 col-sm-1"></div>   
+                
             </div>
-            {!! Form::open(['route' => 'dashboard_info']) !!}
-    
-   <div class="formBlock" >
-    <div class="input-group input-group-lg" id="formInput">
-   	{!! Form::text('studentNumber', null , array('class' => 'form-control', 'placeholder' => 'Student Number' ) ) !!}
-  </div>
-  <div id="formButton">
-  {!!Form::submit('SUBMIT', array('class' => 'btn btn-primary btn-lg', 'id' => 'submitButton')  ) !!}
-    </div>   
-  {!! Form::close() !!}
-    </div>
+            
+            <!-- content middle-->
+            <div class="wrapper row block">
+                
+                <div class="container">
+                    <!-- clock -->
+                    <div class="row clock col-md-offset-3">
+                    </div>
 
-</body>
-<html>
+                    <!-- button field / input group -->
+                    {!! Form::open(['route' => 'dashboard_info']) !!}
+                    <div class="row">   
+                        <div class="col-md-6 col-md-offset-3 fhieght">
+                            <div class="input-group">
+
+                               <!--  {!! Form::open(['route' => 'dashboard_info']) !!} -->
+                            <!-- {!! Form::text('studentNumber', null , array('class' => 'form-control', 'placeholder' => 'Enter the Student Number' ) ) !!}
+                            {!!Form::submit('Search', array('class' => 'btn btn-warning', 'id' => 'submitButton')  ) !!}  
+                            {!! Form::close() !!}
+                        -->
+                        <!-- <input type="text" class="form-control" placeholder="Enter the Student Number"> -->
+                        {!! Form::text('studentNumber', null , array('class' => 'form-control', 'placeholder' => 'Enter the Student Number' ) ) !!}
+                        <span class="input-group-btn">
+                            <!-- <button class="btn btn-warning" type="button">Search</button> -->
+                            {!!Form::submit('Search', array('class' => 'btn btn-warning', 'id' => 'submitButton')  ) !!}
+
+                        </span>
+                    </div><!-- /input-group -->
+                </div><!-- /.col-lg-6 -->
+            </div><!-- /.row -->    
+            {!! Form::close() !!}
+            <!-- or -->
+            <div class="or">
+                OR MAKE DATEWISE ENTRY
+            </div>
+            <!-- date time picker -->
+            {!!  Form::open(['route' => 'date_submit']) !!}
+            
+            <div class="row fheight1">
+                <div class="col-md-6 col-md-offset-3 bottom_pad" style="height:100px;">
+                    <div class="form-group">
+                        <div class='input-group date' id='datetimepicker10'>
+                            <!-- <input type='text' class="form-control" placeholder="Enter date for a datewise entry"/> -->
+                            {!! Form::input('date', 'entryDate', null, ['class' => 'form-control']) !!}
+
+                            <span class="input-group-btn">
+                                {!!Form::submit('Simulate', array('class' => 'btn btn-warning', 'id' => 'datewiseEntry'))!!}
+                            </span>
+                        </div>
+                    </div>  
+                </div>
+            </div>  
+            {!! Form::close() !!}
+            <!-- buttons -->
+            {!! Form::open (['route'=>'daily_submit'])!!}
+            <div class="buttons col-md-offset-2 row">
+                <!-- <button class="btn-lg btn-default bt_style col-md-3 col-sm-4">Daily Records Report</button> -->
+                
+                {!!Form::submit('Daily Report', array('class'=>'btn-lg btn-default bt_style col-md-3 col-sm-4', 'id'=>'dailyButton')) !!}
+                {!!Form::close() !!}
+                {!!  Form::open(['route' => 'report_submit']) !!}
+                <div class="col-md-1 col-sm-1"></div>
+                <!-- <button class="btn-lg btn-default bt_style col-md-3 col-sm-4">Some Records Report</button> -->
+                {!!Form::submit('Generate Reports', array('class' => 'btn-lg btn-default bt_style col-md-3 col-sm-4', 'id' => 'reportButton')  ) !!}
+
+            </div>
+            {!! Form::close() !!}
+        </div>  
+    </div>
+    
+    <div class="footer row">
+        <h4 class="text-center">&copy;<strong>SOFTWARE INCUBATOR</strong></h4>
+    </div>                  
+</div>  
+<!-- javascript -->
+<script type="text/javascript">
+var clock;
+
+$(document).ready(function() {
+    clock = $('.clock').FlipClock({
+        clockFace: 'TwelveHourClock'
+    });
+});
+
+            // disable scroll
+            if(window.addEventListener){
+                window.addEventListener('DOMMouseScroll',wheel,false);
+            }
+
+            function wheel(event)
+            {
+                event.preventDefault();
+                event.returnValue=false;
+            }
+            window.onmousewheel=document.onmousewheel=wheel;
+
+
+            // date time picker
+
+            $(function () {
+                $('#datetimepicker10').datetimepicker({
+                    viewMode: 'years',
+                    format: 'MM/YYYY'
+                });
+            }); 
+            </script>           
+        </body>
+        </html>

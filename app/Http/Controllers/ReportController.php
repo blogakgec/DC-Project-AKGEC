@@ -21,7 +21,7 @@ class ReportController extends Controller {
 
 	function generate_report(){
 		
-		 if ($_POST['reportFromDate'] && $_POST['reportToDate'] ) {
+		
 
 		 	$fromDate=$_POST['reportFromDate'];
 		 	$toDate=$_POST['reportToDate'];
@@ -74,16 +74,77 @@ class ReportController extends Controller {
 		 	return view ('RangeReport',compact('entries', 'branch', 'fromDate', 'toDate'));
 		 	
 
-		 }
+		 
 
-		 else
-		 {
-		 	$entries = \DB::table('Counters')->where('temp_counter', '3')->get();
+		 
+		
+	}
+	function daily_report_menu(){
+
+		return view ('DailyReport');
+
+	}
+	function daily_report(){
+
+		 	$date=$_POST['reportDate'];
+		 	
+		 	$branch=$_POST['branch'];
+
+		 	if($branch =='0'){
+		 	$entries= Students::latest('entry_time')->where('entry_time', '<', $date)
+		 											->get();
+		 	}
+		 	else{
+		 		
+		 		switch ($branch) {
+		 			case 1:
+		 				$branch="CS";
+		 				break;
+		 			case 2:
+		 				$branch="IT";
+		 				break;
+		 			case 3:
+		 				$branch="EC";
+		 				break;
+		 			case 4:
+		 				$branch="EN";
+		 				break;
+		 			case 5:
+		 				$branch="EI";
+		 				break;
+		 			case 6:
+		 				$branch="CE";
+		 				break;
+		 			case 7:
+		 				$branch="ME";
+		 				break;
+		 			case 8:
+		 				$branch="MCA";
+		 				break;
+		 			case 9:
+		 				$branch="MBA";
+		 				break;
+		 			
+		 			
+		 		}
+
+		 		$entries= Students::latest('entry_time')->where('entry_time', '<', $date)
+		 											->get();
+		 		}
+		 	
+		 	return view ('DailyReportGenerated',compact('entries', 'branch','date'));
+		 	
+
+
+
+
+	}
+	function three_entry(){
+
+
+			$entries = \DB::table('Counters')->where('temp_counter', '3')->get();
 
 		 	return view ('ThreeEntryReport', compact('entries'));
-		 	
-		 }
-		
 	}
 
 }

@@ -1,84 +1,114 @@
-<html lang="en">
-
+<html>
 <head>
+    <title>Late Entry | Datewise</title>
 
-<meta charset="UTF-8">
-<title>Next Entry</title>
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="../public/css/dashboard.css">
+    <!-- bootstrapcdn -->
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <!-- css file -->
+    <link rel="stylesheet" type="text/css" href="../css/inside.css">
+    <!-- css file -->
+    <link rel="stylesheet" type="text/css" href="../css/mainpage.css">     
+    <!-- clock1 css-->
+    <link rel="stylesheet" type="text/css" href="../css/clock1.css">
+    <!-- register css -->
+    <link rel="stylesheet" type="text/css" href="../css/register.css">
 
 </head>
 
 <body>
-
-<div class="jumbotron">
-    
-  <h1 align="center">Welcome, Mr. <?php echo $Session['current_user']; ?></h1>
-  
-</div>
-<div id="date">
-        <h3 align="left">Today is <?php echo date("l, d M Y"); ?></h3>
-        {!!  Form::open(['route' => 'date_submit']) !!}
-        <div id="Datewise_entry_field">
-        
-        {!! Form::input('date', 'entryDate', null, ['class' => 'form-control']) !!}
-    </div>
-    <div id="Datewise_entry_button">
-        {!!Form::submit('DATEWISE ENTRY', array('class' => 'btn btn-primary ', 'id' => 'datewiseEntry')  ) !!}
-        </div>
-        {!! Form::close() !!}
-        {!!  Form::open(['route' => 'logout_submit']) !!}
-        <div id="Late_entry_button">
-        <center>
-        {!!Form::submit('LOGOUT', array('class' => 'btn btn-primary btn-lg', 'id' => 'logoutButton')  ) !!}
-        </center>
-        {!! Form::close() !!}
-        </div>
+    <div class="container-fluid">
+        <!-- header -->
+        <div class="header row">
+            <h1 class="text-center"><strong>AKGEC LATE ENTRY SYSTEM</strong></h1>
+            <!-- logout button at top -->
+            {!!  Form::open(['route' => 'logout_submit']) !!}
+            {!!Form::submit('LOGOUT', array('class' => 'btn btn-default col-md-offset-11 logout')  ) !!}
+            {!! Form::close() !!}
+            <!-- back button at top -->
+            {!!  Form::open(['route' => 'back_button']) !!}
+            {!!Form::submit('BACK', array('class' => 'btn btn-default col-md-offset-1 logout', 'id' => 'backButton')  ) !!}
+            {!! Form::close() !!}
         </div>
 
-       
+        <!-- jumbotron -->
+        <div class="wrapper row block">
+            <div class="jumbotron col-md-8 jbt" style="padding-right:0px; padding-left:4%;">    <!-- padding for accomodating button -->
+                <!-- pic -->
+                <div class="col-md-2 thumbnail">                        
+                </div>
+                <!-- Info -->
+                <div class="col-md-8 info">
+                    <!-- name -->
+                    <div class="name">
+                        {{ $info->student_name  }}
+                    </div>
+                    <hr>
+                    <!-- student no. -->
+                    <div class="stud_no">
+                        {{ $info->student_id }}
+                    </div>  
+                    <!-- branch -->
+                    <div class="branch">
+                        <?php
+                        switch($info->branch){
+                            case 'CS': {
+                                $branch="Computer Science";
+                                break;}
+                                case 'IT': {
+                                    $branch="Information Technology";
+                                    break;} 
+                                    case 'EN': {
+                                        $branch="Electrical Engineering";
+                                        break;}
+                                        case 'EC': {
+                                            $branch="Electronics & Communication";
+                                            break;}
+                                            case 'ME': {
+                                                $branch="Mechanical";
+                                                break;}
+                                                case 'EI': {
+                                                    $branch="Electronics & Instrumentation";
+                                                    break;} 
+                                                    case 'CE': {
+                                                        $branch="Civil Engineering";
+                                                        break;}
+                                                        case 'MCA': {
+                                                            $branch="MCA";
+                                                            break;}
+                                                            case 'MBA': {
+                                                                $branch="MBA";
+                                                                break;}
+                                                            }
+                                                            echo $branch;
+                                                            ?>
 
-        <div id="Student_pic" class="box">
-            <img src="http://a.dryicons.com/images/icon_sets/shine_icon_set/png/256x256/user.png">
-        </div>
+                                                        </div>
+                                                    </div> 
+                                                    
+                                                    {!! Form::open(['route' => 'register_entry']) !!}
+                                                    {!!Form::submit('Register Late Entry', array('class' => 'btn-lg btn-warning register_button', 'id' => 'loginButton')  ) !!}
+                                                    {!! Form::close() !!}
 
-        <div id="Student_info" class="box">
-            <h2>Details of {{ $info->student_name  }}</h2>
-            <hr>
-            <h4>Student Number : {{ $info->student_id }}</h4>
-            <h4>Branch : {{ $info->branch }}</h4>
-            <h4>Year : {{ $info->year }} Year</h4>
-            <h4>E-mail : {{ $info->email }}</h4>
-            <h4>Contact No. : {{ $info->contact_no }}</h4>
-        </div>
-        
-       <h2>Late Entry</h2>
+                                                </div>                                  
+                                            </div>
 
-        @foreach ($entries as $entry)
-            <div id="Student_entries" class="box">
+                                            
+                                            <!-- footer -->
+                                            <div class="footer row">
+                                                <h4 class="text-center">&copy;<strong>SOFTWARE INCUBATOR</strong></h4>
+                                            </div>
+                                        </div>                              
+                                        
 
-            
-                
-                <h4> {{ $entry->entry_time }} </h4>
-            
+                                        <!-- javascript          -->
+                                        <!-- jquery -->
+                                        <script type="text/javascript" src="js/jquery.js"></script>
 
-            </div>
-        @endforeach
-        {!! Form::open(['route' => 'register_entry']) !!}
-        <div id="Late_entry_button">
-        <center>
-        {!!Form::submit('REGISTER LATE ENTRY', array('class' => 'btn btn-primary btn-lg', 'id' => 'registerLateEntry')  ) !!}
-        </center>
-        {!! Form::close() !!}
-        </div>
+                                        <!-- Latest compiled and minified JavaScript -->
+                                        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
-           
-
-
-
-
-
-
-</body>
-<html>
+                                        
+                                        <!-- bootstrap -->  
+                                        <script type="text/javascript" src="js/bootstrap.js"></script>     
+                                    </body>
+                                    </html>

@@ -21,7 +21,7 @@ class DashboardController extends Controller {
 
 		if (\Session::has('current_user'))
 		{
-    		return true;
+			return true;
 		}
 		else
 		{
@@ -31,7 +31,7 @@ class DashboardController extends Controller {
 		
 	}
 
-function show_menu(){
+	function show_menu(){
 
 
 
@@ -54,17 +54,28 @@ function show_menu(){
 
 
 		$student_no= $_POST['studentNumber'];
-		 \Session::put('student_no', $student_no);
-		 $Session= \Session::all();
-		 $previousEntry= $this->check_for_entries($student_no);
-		 
-		 $entries= \DB::table('Students')->where('student_id', $student_no)->get();
+		\Session::put('student_no', $student_no);
+		$Session= \Session::all();
+		$previousEntry= $this->check_for_entries($student_no);
+
+		$entries= \DB::table('Students')->where('student_id', $student_no)->get();
 		
-		 $info = \DB::table('Students_infos')->where('student_id', $student_no)->first();
+		$info = \DB::table('Students_infos')->where('student_id', $student_no)->first();
+
+		if (!$info) {
+
+			return view('new_entry', compact('Session'));
+
+
+
+		}
+
+
+
 
 		if (\Session::has('entry_date'))
 		{
-    		
+
 			return view('datewise_entry', compact('Session', 'entries','info'));
 
 
@@ -74,20 +85,20 @@ function show_menu(){
 		{
 			
 			
-		 
 
-		 if ($previousEntry>0) {
-		
-		 return view('next_entry', compact('Session','entries', 'info'));
-		 }
-		 elseif ($previousEntry==0) {
-		 	
-		 	return view('first_entry', compact('Session', 'info'));
-		 }
+
+			if ($previousEntry>0) {
+
+				return view('next_entry', compact('Session','entries', 'info'));
+			}
+			elseif ($previousEntry==0) {
+
+				return view('first_entry', compact('Session', 'info'));
+			}
 
 
 		}
-	
+
 
 	}
 	
@@ -109,94 +120,94 @@ function show_menu(){
 	function throw_entry(){
 
 		
-    		$student_no= \Session::get('student_no');
-    		$info = \DB::table('Students_infos')->where('student_id', $student_no)->first();
+		$student_no= \Session::get('student_no');
+		$info = \DB::table('Students_infos')->where('student_id', $student_no)->first();
 
 
 		if (\Session::has('entry_date'))
 		{
-    		
-		 
-		$entry_date= \Session::get('entry_date');
-	
-	  \DB::table('Students')->insert(
-     ['student_id' => $info->student_id, 'student_name' => $info->student_name, 'entry_time'=> $entry_date]);
 
-	  $total_count= \DB::table('Students')->where('student_id', $info->student_id)->count();
-	  $temp_count=$total_count;
-	  if ($temp_count>3) {
 
-	  	$temp_count=$total_count%3;
-	  	if ($temp_count=='0') {
-	  		$temp_count=3;
-	  	}
-	  }
+			$entry_date= \Session::get('entry_date');
 
-	  $previousEntry= $this->check_for_entries($info->student_id)-1;
-	  if ($previousEntry=='0') {
+			\DB::table('Students')->insert(
+				['student_id' => $info->student_id, 'student_name' => $info->student_name, 'entry_time'=> $entry_date]);
+
+			$total_count= \DB::table('Students')->where('student_id', $info->student_id)->count();
+			$temp_count=$total_count;
+			if ($temp_count>3) {
+
+				$temp_count=$total_count%3;
+				if ($temp_count=='0') {
+					$temp_count=3;
+				}
+			}
+
+			$previousEntry= $this->check_for_entries($info->student_id)-1;
+			if ($previousEntry=='0') {
 	  	//insert record in counter table
-	  	\DB::table('Counters')->insert(
-     ['student_id' => $info->student_id, 'total_counter' => $total_count, 'temp_counter'=> $temp_count]);
+				\DB::table('Counters')->insert(
+					['student_id' => $info->student_id, 'total_counter' => $total_count, 'temp_counter'=> $temp_count]);
 
-	  }
-	  else{
+			}
+			else{
 	  	//update record in counter table
-	  	
-	  	\DB::table('Counters')
-            ->where('student_id', $info->student_id)
-            ->update(['total_counter' => $total_count]);
-            \DB::table('Counters')
-            ->where('student_id', $info->student_id)
-            ->update(['temp_counter' => $temp_count]);
-            
-	  }
 
-	  
-	return \Redirect::to('datewise');
-		 
-		 
+				\DB::table('Counters')
+				->where('student_id', $info->student_id)
+				->update(['total_counter' => $total_count]);
+				\DB::table('Counters')
+				->where('student_id', $info->student_id)
+				->update(['temp_counter' => $temp_count]);
+
+			}
+
+
+			return \Redirect::to('datewise');
+
+
 		}
 		else
 		{
-			 
-		
-		 \DB::table('Students')->insert(
-    ['student_id' => $info->student_id, 'student_name' => $info->student_name, 'entry_time'=> \Carbon\Carbon::now()]);
-		
 
-		 $total_count= \DB::table('Students')->where('student_id', $info->student_id)->count();
-	  $temp_count=$total_count;
-	  if ($temp_count>3) {
 
-	  	$temp_count=$total_count%3;
-	  	if ($temp_count=='0') {
-	  		$temp_count=3;
-	  	}
-	  }
+			\DB::table('Students')->insert(
+				['student_id' => $info->student_id, 'student_name' => $info->student_name, 'entry_time'=> \Carbon\Carbon::now()]);
 
-	  $previousEntry= $this->check_for_entries($info->student_id)-1;
-	  if ($previousEntry=='0') {
+
+			$total_count= \DB::table('Students')->where('student_id', $info->student_id)->count();
+			$temp_count=$total_count;
+			if ($temp_count>3) {
+
+				$temp_count=$total_count%3;
+				if ($temp_count=='0') {
+					$temp_count=3;
+				}
+			}
+
+			$previousEntry= $this->check_for_entries($info->student_id)-1;
+			if ($previousEntry=='0') {
 	  	//insert record in counter table
-	  	\DB::table('Counters')->insert(
-     ['student_id' => $info->student_id, 'total_counter' => $total_count, 'temp_counter'=> $temp_count]);
+				\DB::table('Counters')->insert(
+					['student_id' => $info->student_id, 'total_counter' => $total_count, 'temp_counter'=> $temp_count]);
 
-	  }
-	  else{
+			}
+			else{
 	  	//update record in counter table
-	  	
-	  	\DB::table('Counters')
-            ->where('student_id', $info->student_id)
-            ->update(['total_counter' => $total_count]);
-            \DB::table('Counters')
-            ->where('student_id', $info->student_id)
-            ->update(['temp_counter' => $temp_count]);
-            
-	  }
+
+				\DB::table('Counters')
+				->where('student_id', $info->student_id)
+				->update(['total_counter' => $total_count]);
+				\DB::table('Counters')
+				->where('student_id', $info->student_id)
+				->update(['temp_counter' => $temp_count]);
+
+			}
 
 
 
-		 return \Redirect::to('dashboard');
-		 
+			return \Redirect::to('dashboard');
+
 			
 		}
 		
@@ -211,18 +222,18 @@ function show_menu(){
 
 		if (\Session::has('entry_date')) {
 			
-		 $Session= \Session::all();
+			$Session= \Session::all();
 
-		  return view('datewise', compact('Session'));
+			return view('datewise', compact('Session'));
 		}
 
 		else{
 
 			$entry_date= $_POST['entryDate'];
-		\Session::put('entry_date', $entry_date);
-		 $Session= \Session::all();
+			\Session::put('entry_date', $entry_date);
+			$Session= \Session::all();
 
-		  return view('datewise', compact('Session'));		
+			return view('datewise', compact('Session'));		
 		}
 
 	}
@@ -231,9 +242,9 @@ function show_menu(){
 
 		$entry_date= $_POST['entryDate'];
 		\Session::put('entry_date', $entry_date);
-		 $Session= \Session::all();
+		$Session= \Session::all();
 
-		  return view('datewise', compact('Session'));	
+		return view('datewise', compact('Session'));	
 
 
 	}
@@ -248,7 +259,8 @@ function show_menu(){
 		$active= $this->check();
 		if ($active) {
 			$Session= \Session::all();
-			return view('Dashboard', compact('Session'));	
+			//return view('Dashboard', compact('Session'));	
+			return \Redirect::to('dashboard');
 		}
 		else{
 			return \Redirect::to('login');
@@ -260,7 +272,28 @@ function show_menu(){
 
 	}
 
+	function new_entry(){
+
+
+		$name=$_POST['studentName'];
+		$year=$_POST['studentYear'];
+		$student_no=$_POST['studentNumber'];
+		$branch=$_POST['studentBranch'];
+
 		
+		\DB::table('Students_infos')->insert(
+			['student_id' => $student_no, 'student_name' => $name, 'year'=> $year, 'branch'=>$branch]);
+
+
+		\DB::table('Students')->insert(
+				['student_id' => $student_no, 'student_name' => $name, 'entry_time'=> \Carbon\Carbon::now()]);
+			
+		return \Redirect::to('dashboard');
+		
+
+	}
+
+
 
 
 	

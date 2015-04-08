@@ -1,9 +1,9 @@
 <?php
 
-//Login Route
-Route::get('login', array('as' => 'login', 'uses' => 'LoginController@login'));
 //Login Submit Route
 Route::post('login', array('as' => 'submit_login', 'uses' => 'LoginController@proceed'));
+//Login Route
+Route::get('login', array('as' => 'login', 'uses' => 'LoginController@login'));
 //Dashboard get Route
 Route::get('dashboard', array('as' => 'dashboard', 'uses' => 'DashboardController@show_menu'));
 //Date Submit Route
@@ -22,30 +22,22 @@ Route::post('datewise', array('as' => 'date_change_submit', 'uses' => 'Dashboard
 //Back Button Route
 Route::post('dashboard/back', array('as' =>'back_button', 'uses' => 'DashboardController@back_button'));
 //Report Button Route
-Route::post('report', array('as' =>'report_submit', 'uses' => 'ReportController@report_menu'));
+Route::post('report_menu', array('as' =>'report_submit', 'uses' => 'ReportController@report_menu'));
 //Generate Report Route
 Route::post('generate_report', array('as' =>'generate_report', 'uses' => 'ReportController@generate_report'));
+//Daily Report Route
+Route::post('daily_report_menu', array('as' => 'daily_submit' , 'uses'=>'ReportController@daily_report_menu'));
+//Daily Report Generate
+Route::post('generate_daily_report', array('as'=>'daily_report', 'uses'=>'ReportController@daily_report'));
+//Three Entry Report Generate
+Route::post('three_entry_report', array('as'=>'generate_three_entry_report', 'uses'=>'ReportController@three_entry'));
+//New Entry Submit 
+Route::post('new_entry', array('as'=>'details_submit', 'uses'=>'DashboardController@new_entry'));
 
 
 
 
 
-// Route::post('datewise/entry', array('as' => 'register_datewise_entry', 'uses' => 'DashboardController@throw_entry'));
-
-
-
-
-
-// Route::post('logout', array('as' => 'logout', 'uses' => 'LoginController@logout'));
-// Route::get('login', 'LoginController@login');
-// Route::post('login', 'LoginController@proceed');
-// Route::get('dashboard', 'DashboardController@show_menu');
-// Route::post('dashboard',array('as' => 'dashboard_info' ,'uses'=>'DashboardController@store'));
-// Route::post('dashboard/entry', 'DashboardController@throw_entry');
-// Route::post('dashboard', 'DashboardController@store');
-// Route::post('datewise', array('as' => 'datewise', 'uses' => 'DashboardController@datewise_entry'));
-// Route::post('datewise_student_entry', array('as' => 'datewise_student_entry', 'uses' => 'DashboardController@throw_entry'));
-// Route::post('dashboard', array('as' => 'normal_entry', 'uses' => 'DashboardController@show_menu'));
 
 
 Route::get('get', function()

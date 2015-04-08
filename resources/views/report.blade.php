@@ -1,73 +1,134 @@
-<html lang="en">
-
+<html>
 <head>
-
-<meta charset="UTF-8">
-<title>Report</title>
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="../public/css/dashboard.css">
-
+    <title>Late Entry | Report</title>
+    
+    <!-- bootstrapcdn -->
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <!-- css file -->
+    <link rel="stylesheet" type="text/css" href="../public/css/inside.css">
+    <!-- css file -->
+    <link rel="stylesheet" type="text/css" href="../public/css/mainpage.css">     
 </head>
 
 <body>
+    <div class="container-fluid">
+        <!-- header -->
+        <div class="header row">
+            <div class="col-md-2 col-sm-1"></div>
+            <h1 class="text-center center col-md-7 col-sm-8">AKGEC LATE ENTRY SYSTEM</h1>
+            <!-- empty -->
+            <div class="col-md-1 col-sm-1"></div>
+            <!-- logout button at top -->
+            {!!  Form::open(['route' => 'logout_submit']) !!}
 
-<div class="jumbotron">
-    
-  <h1 align="center">REPORT GENERATION</h1>
-  
+            {!!Form::submit('Logout', array('class' => 'btn btn-default col-md-1 col-sm-1 logout')  ) !!}
+
+            {!! Form::close() !!}
+            <!-- empty -->
+            <div class="col-md-1 col-sm-1"></div>               
+        </div>
+        {!!  Form::open(['route' => 'generate_three_entry_report']) !!}
+        <div class="wrapper row block">
+            <div class="generate_buttons col-md-8 col-md-offset-2"> 
+                    <!-- <button class="btn btn-default generate">
+                        <h3>Generate document for students with 3 late entries</h3>
+                    </button> -->
+                    
+                    
+                    {!!Form::submit('Generate document for students with 3 late entries', array('class' => 'btn btn-default generate', 'id' => 'report_Button')  ) !!}
+                    {!!Form::close()!!}
+
+                    <!-- Button trigger modal -->
+                    <a href="#modal1" data-toggle="modal" style="text-decoration:none;">    
+                        <button class="btn btn-default generate" >
+                            <h3>Generate document for students for a certain period</h3>
+                        </button>
+                    </a>                    
+                </div>  
+            </div>
+
+            
+            <!-- footer -->
+            <div class="footer row">
+                <h4 class="text-center">&copy;<strong>SOFTWARE INCUBATOR</strong></h4>
+            </div>
+        </div>  
+        <!-- modal -->
+        <div class="modal fade" id="modal1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div clss="modal-header">
+                        <h3>Welcome</h3>
+                    </div>
+                    <div class="modal-body">
+                        <!-- calendar -->
+                        <div class="container">
+                            <div class="col-sm-6" style="height:130px;">
+                                <div class="form-group">
+                                    <div class='input-group date' id='datetimepicker9'>
+                                        <input type='text' class="form-control" />
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar">
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- branch dropdown -->
+                    <div class="dropdown">
+                      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                        Branches
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Ece</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Cse</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">it</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">me</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning" data-dismiss="modal">Submit</button>
+            </div>
+        </div>
+    </div>
 </div>
-<div id="date">
-        <h3 align="left">Today is <?php echo date("l, d M Y"); ?></h3>
-
-        
-        {!!  Form::open(['route' => 'back_button']) !!}
-        <div id="back_button">
-        {!!Form::submit('BACK', array('class' => 'btn btn-primary ', 'id' => 'backButton')  ) !!}
-        </div>
-        {!! Form::close() !!}
-        {!!  Form::open(['route' => 'logout_submit']) !!}
-        <div id="Late_entry_button">
-        <center>
-        {!!Form::submit('LOGOUT', array('class' => 'btn btn-primary btn-lg', 'id' => 'logoutButton')  ) !!}
-        </center>
-        {!! Form::close() !!}
-        </div>
-        </div>
-        {!!  Form::open(['route' => 'generate_report']) !!}
-        <div id="Generate_report_button">
-        <center>
-        {!!Form::submit('Three Entries Report', array('class' => 'btn btn-primary btn-lg', 'id' => 'report_Button')  ) !!}
-        </center>
-        <div id="Datewise_report_field">
-            <p>From Date </p>
-        {!! Form::input('date', 'reportFromDate', null, ['class' => 'form-control']) !!}
-        <p>To Date </p>
-        {!! Form::input('date', 'reportToDate', date('Y-m-d'), ['class' => 'form-control']) !!}
-    </div>
-    <div id="Branch_report_field">
-       <p>Select Branch(es)</p>
-
-     {!! Form::select('branch', ['ALL', 'CS', 'IT', 'EC', 'EN', 'EI', 'CE', 'ME', 'MCA', 'MBA']) !!}
-    </div>
-               <center>
-        {!!Form::submit('Range Entries Report', array('class' => 'btn btn-primary btn-lg', 'id' => 'report_Button')  ) !!}
-        </center>
-  
-        {!! Form::close() !!}
-        </div>
 
 
-       
+<!-- javascript          -->
 
-       
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
-           
+<!-- jquery -->
+<script type="text/javascript" src="../public/js/jquery.js"></script>
+<!-- bootstrap --> 
+<script type="text/javascript" src="../public/js/bootstrap.js"></script>
 
 
+<script type="text/javascript">
+        // calendar access
+        $('#datetimepicker6').data("DateTimePicker").FUNCTION()
 
+             //calendar script
 
+             $(function () {
+                $('#datetimepicker9').datetimepicker({
+                    viewMode: 'years'
+                });
+            });
 
+                //calendar script 2
 
-</body>
-<html>
+                $(function () {
+                    $('#datetimepicker2').datetimepicker({
+                        locale: 'ru'
+                    });
+                });
+                
+                
+                </script>
+            </body>
+            </html>
