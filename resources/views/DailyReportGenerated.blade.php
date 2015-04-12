@@ -33,7 +33,14 @@
 		
 		<div class="container block">
 			<div class="row Heading">
-				<h2 class="cl-md-offset-1 tb">Records Report of Date : {{ $date}}</h2>
+				<?php
+				$branch_name;
+				if($branch=='0')
+				{
+					$branch="All";
+				}
+				?>
+				<h2 class="cl-md-offset-1 tb">Records Report of Date {{ $date}} for {{$branch}} Branch :</h2>
 				<div class="overflo">
 					<table class="table">
 						<thead>
@@ -54,7 +61,7 @@
 							foreach ($entries as $entry) {
 								
 								$info = \DB::table('Students_infos')->where('student_id', $entry['student_id'])->first();
-								$passInfo = array('student_id' =>$info->student_id ,
+								$passInfo = array('student_id' =>$info->student_id,
 									'student_name'=>$info->student_name,
 									'branch'=>$info->branch,
 									'year'=>$info->year,

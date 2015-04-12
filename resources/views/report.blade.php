@@ -36,6 +36,7 @@
                     
                     
                     {!!Form::submit('Generate document for students with 3 late entries', array('class' => 'btn btn-default generate', 'id' => 'report_Button')  ) !!}
+                    
                     {!!Form::close()!!}
 
                     <!-- Button trigger modal -->
@@ -54,47 +55,70 @@
             </div>
         </div>  
         <!-- modal -->
-        <div class="modal fade" id="modal1" role="dialog">
+        <!-- modal -->
+<div class="modal fade md" id="modal1" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div clss="modal-header">
+                    <div class="modal-header">
                         <h3>Welcome</h3>
                     </div>
+                        {!!  Form::open(['route' => 'generate_report']) !!}
                     <div class="modal-body">
                         <!-- calendar -->
-                        <div class="container">
-                            <div class="col-sm-6" style="height:130px;">
-                                <div class="form-group">
-                                    <div class='input-group date' id='datetimepicker9'>
-                                        <input type='text' class="form-control" />
-                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar">
-                                        </span>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                            <h4 class="text-center hfour">Record From Date</h4>                         
+                                <div >
+                                    <div class="form-group">
+                                        <div class='input-group date' id='datetimepicker9'>
+                                           <!--  <input type='text' class="form-control pd" /> -->
 
-                    <!-- branch dropdown -->
-                    <div class="dropdown">
-                      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-                        Branches
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Ece</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Cse</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">it</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">me</a></li>
-                    </ul>
+                                           {!! Form::input('date', 'reportFromDate', null, ['class' => 'form-control']) !!}
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 class="text-center hfour">To Date</h4>                         
+                                <div >
+                                    <div class="form-group">
+                                        <div class='input-group date' id='datetimepicker9'>
+                                           <!--  <input type='text' class="form-control pd" /> -->
+
+                                           {!! Form::input('date', 'reportToDate', null, ['class' => 'form-control']) !!}
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- branch input starts here -->
+                            <div>
+                            <h4 class="text-center hfour">Branch(es)</h4>                           
+                             
+                                    
+                                    <!-- <div class="input-group-btn"> -->
+                                        <!-- <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Branch<span class="  caret"></span></button>
+                                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                          <li><a href="#">Civil</a></li>
+                                          <li><a href="#">CSE</a></li>
+                                          <li><a href="#">ECE</a></li>
+                                          <li><a href="#">EI</a></li>
+                                          <li><a href="#">EN</a></li>
+                                          <li><a href="#">M.C.A</a></li>
+                                          <li><a href="#">Mechanical</a></li>                                     
+                                        </ul> -->
+                                        
+                                        {!! Form::select('branch', ['ALL', 'CS', 'IT', 'EC', 'EN', 'EI', 'CE', 'ME', 'MCA', 'MBA'],['class' => 'form-control']) !!}
+                                   
+                                
+                            </div><!-- /.col-lg-6 -->                           
+                    </div>  
+
+                    <div class="modal-footer">
+                        <!-- <button class="btn btn-warning" data-dismiss="modal">Submit</button> -->
+                        {!!Form::submit('Get Range Report', array('class' => 'btn btn-warning', 'id' => 'report_Button')  ) !!}
+                    </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-warning" data-dismiss="modal">Submit</button>
-            </div>
         </div>
-    </div>
-</div>
+        {!! Form::close() !!}
 
 
 <!-- javascript          -->

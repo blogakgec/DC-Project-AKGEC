@@ -25,8 +25,6 @@ Route::post('dashboard/back', array('as' =>'back_button', 'uses' => 'DashboardCo
 Route::post('report_menu', array('as' =>'report_submit', 'uses' => 'ReportController@report_menu'));
 //Generate Report Route
 Route::post('generate_report', array('as' =>'generate_report', 'uses' => 'ReportController@generate_report'));
-//Daily Report Route
-Route::post('daily_report_menu', array('as' => 'daily_submit' , 'uses'=>'ReportController@daily_report_menu'));
 //Daily Report Generate
 Route::post('generate_daily_report', array('as'=>'daily_report', 'uses'=>'ReportController@daily_report'));
 //Three Entry Report Generate

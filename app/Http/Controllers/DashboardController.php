@@ -287,6 +287,9 @@ class DashboardController extends Controller {
 
 		\DB::table('Students')->insert(
 				['student_id' => $student_no, 'student_name' => $name, 'entry_time'=> \Carbon\Carbon::now()]);
+
+		\DB::table('Counters')->insert(
+					['student_id' => $student_no, 'total_counter' => "1", 'temp_counter'=> "1"]);
 			
 		return \Redirect::to('dashboard');
 		

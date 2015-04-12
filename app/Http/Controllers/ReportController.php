@@ -91,7 +91,7 @@ class ReportController extends Controller {
 		 	$branch=$_POST['branch'];
 
 		 	if($branch =='0'){
-		 	$entries= Students::latest('entry_time')->where('entry_time', '<', $date)
+		 	$entries= Students::latest('entry_time')->where('entry_time', '=', $date)
 		 											->get();
 		 	}
 		 	else{
@@ -128,7 +128,7 @@ class ReportController extends Controller {
 		 			
 		 		}
 
-		 		$entries= Students::latest('entry_time')->where('entry_time', '<', $date)
+		 		$entries= Students::latest('entry_time')->where('entry_time', '=', $date)
 		 											->get();
 		 		}
 		 	
